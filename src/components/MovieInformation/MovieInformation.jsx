@@ -4,23 +4,42 @@ import { Movie as MovieIcon, Theaters, Language, PlusOne, Favorite, FavoriteBord
 import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { useGetMovieQuery } from '../../services/TMDB';
+import { useGetMovieQuery, useGetRecommendationsQuery } from '../../services/TMDB';
 import useStyles from './styles';
 import alternatePoster from '../../Assets/movie_poster.png';
 import { selectGenreOrCategory } from '../../features/currentGenreOrCategory';
 
 import genreIcons from '../../Assets/genres/index';
+import { MovieList } from '../index';
 
 function MovieInformation() {
   const classes = useStyles();
   const { id } = useParams();
   const { data, isFetching, error } = useGetMovieQuery(id);
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
+  const { data: recommendations, isFetching: isRecommendationsFetching } = useGetRecommendationsQuery({ list: '/recommendations', movie_id: id });
+  const isMovieFavorited = true;
+  const isMovieWatchListed = true;
+
+  const addToFavorites = () => {
+
+  };
+  const addToWatchList = () => {
+
+  };
   if (isFetching) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center">
         <CircularProgress size="8rem" />
+      </Box>
+    );
+  }
+  if (isRecommendationsFetching) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center">
+        <CircularProgress size="8rem" />
+
       </Box>
     );
   }
@@ -38,7 +57,7 @@ function MovieInformation() {
       </Grid>
       <Grid item container direction="column" lg={7}>
         <Typography variant="h3" align="center" gutterBottom>
-          {data?.title}({(data.release_date.split('-')[0])})
+          {data?.title}({(data?.release_date.split('-')[0])})
         </Typography>
         <Typography variant="h5" align="center" gutterBottom>
           {data?.tagline}
@@ -98,17 +117,15 @@ function MovieInformation() {
                 <Button target="_blank" rel="noopener noreferrer" href={`https://www.imdb.com/title/${data?.imdb_id}`} endIcon={<MovieIcon />}>
                   IMDB
                 </Button>
-                <Button onClick={() => setOpen(true)} href="#" endIcon=<Theaters />>Trailer</Button>
+                {/* <Button onClick={() => setOpen(true)} href="#" endIcon=<Theaters />>Trailer</Button> */}
               </ButtonGroup>
             </Grid>
             <Grid item xs={12} sm={6} className={classes.buttonContainer}>
               <ButtonGroup size="small" variant="outlined">
-                <Tooltip disableTouchListener title=" Functionality has not been implemented in this project">
-                  <Button onClick={() => {}} endIcon={<Favorite />}>Favorite</Button>
-                </Tooltip>
-                <Tooltip disableTouchListener title=" Functionality has not been implemented in this project">
-                  <Button onClick={() => {}} endIcon={<PlusOne />}>WatchList</Button>
-                </Tooltip>
+
+                <Button onClick={addToFavorites} endIcon={isMovieFavorited ? <FavoriteBorderOutlined /> : <Favorite />}>{ isMovieFavorited ? 'Unfavorite' : 'Favorite'}</Button>
+
+                <Button onClick={addToWatchList} endIcon={isMovieWatchListed ? <Remove /> : <PlusOne />}>Watchlist</Button>
                 <Button endIcon={<ArrowBack />} sx={{ borderColor: 'primary.main' }}>
                   <Typography style={{ textDecoration: 'none' }} component={Link} to="/" color="inherit" variant="subtitle2">
                     Back
@@ -118,10 +135,25 @@ function MovieInformation() {
               </ButtonGroup>
             </Grid>
           </div>
-
         </Grid>
-
       </Grid>
+      <Box marginTop="5rem" width="100%">
+        <Typography variant="h3" gutterBottom align="center">
+          You might also like
+        </Typography>
+        {/* Loop through recommended movies  */}
+        {recommendations ? <MovieList movies={recommendations} numberOfMovies={12} /> : <Box>Sorry, nothing is found.</Box>}
+      </Box>
+      {/* <Modal
+        closeAfterTransition
+        className={classes.modal}
+        open={open}
+        onClose={() => setOpen(false)}
+      >
+        {data.videos.results.length > 0 && (
+          <iframe autoPlay className={classes.videos} title="Trailer" src={`https://www.youtube.com/embed/${data.videos.results[0].key}`} allow="autoplay" />
+        )}
+      </Modal> */}
     </Grid>
   );
 }
