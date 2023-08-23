@@ -29,6 +29,7 @@ module.exports = {
     'no-unused-vars': 'off',
     'import/no-cycle': 0,
     'no-console': 0,
+    'consistent-return': 'off',
     'react/prop-types': 0,
     'linebreak-style': 0,
     'react/state-in-constructor': 0,

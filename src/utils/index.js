@@ -6,10 +6,12 @@ export const moviesApi = axios.create({
     api_key: process.env.REACT_APP_TMDB_KEY,
   },
 });
+// console.log('this is movieAPi', moviesApi);
 
 export const fetchToken = async () => {
   try {
     const { data } = await moviesApi.get('/authentication/token/new');
+
     const token = data.request_token;
     if (data.success) {
       localStorage.setItem('request_token', token);
@@ -33,5 +35,4 @@ export const createSessionID = async () => {
       console.log(error);
     }
   }
-  return null;
 };

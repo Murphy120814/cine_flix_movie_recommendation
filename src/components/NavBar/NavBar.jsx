@@ -24,12 +24,15 @@ function NavBar() {
   // console.log(user);
   useEffect(() => {
     const logInUser = async () => {
+      // console.log('token', token);
       if (token) {
         if (sessionIdFromLocalStorage) {
+          // console.log('local', 1);
           const { data: userData } = await moviesApi.get(`/account?session_id=${sessionIdFromLocalStorage}`);
           dispatch(setUser(userData));
         } else {
           const sessionId = await createSessionID();
+          // console.log('session', 2);
           const { data: userData } = await moviesApi.get(`/account?session_id=${sessionId}`);
           dispatch(setUser(userData));
         }

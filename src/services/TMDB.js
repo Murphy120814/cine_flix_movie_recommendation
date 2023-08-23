@@ -38,4 +38,4 @@ export const tmdbApi = createApi({
 });
 // console.log(tmdbApi);
 
-export const { useGetMoviesQuery, useGetGenresQuery } = tmdbApi;
+export const { useGetMoviesQuery, useGetGenresQuery, useGetMovieQuery } = tmdbApi;
