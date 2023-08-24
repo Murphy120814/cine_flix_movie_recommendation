@@ -1,6 +1,7 @@
 import React from 'react';
 import { CssBaseline } from '@mui/material';
 import { Route, Routes } from 'react-router-dom';
+import { ConnectingAirportsOutlined } from '@mui/icons-material';
 import { Actors, Movies, MovieInformation, Profile, NavBar } from './index';
 
 // ?importing css lib
@@ -8,6 +9,7 @@ import useStyles from './styles';
 
 function App() {
   const classes = useStyles();
+  console.log('iiiiiiiiiiiiiiiiiiiiiiiiiiammmm');
   return (
     <div className={classes.root}>
       <CssBaseline enableColorScheme />
