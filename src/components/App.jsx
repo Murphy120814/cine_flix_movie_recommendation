@@ -9,7 +9,7 @@ import useStyles from './styles';
 
 function App() {
   const classes = useStyles();
-  console.log('iiiiiiiiiiiiiiiiiiiiiiiiiiammmm');
+  if (process.env.NODE_ENV === 'production') { console.log = function no_console() {}; }
   return (
     <div className={classes.root}>
       <CssBaseline enableColorScheme />
