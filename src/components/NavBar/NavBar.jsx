@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AppBar, IconButton, Toolbar, Drawer, Button, Avatar, useMediaQuery } from '@mui/material';
 import { Menu, AccountCircle, Brightness4, Brightness7 } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+
 import { useTheme } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser, userSelector } from '../../features/auth';
@@ -24,6 +25,7 @@ function NavBar() {
   const sessionIdFromLocalStorage = localStorage.getItem('session_id');
 
   const colorMode = useContext(ColorModeContext);
+  const location = useLocation();
 
   // console.log(user);
   useEffect(() => {
@@ -69,7 +71,7 @@ function NavBar() {
 
           <div>
             {!isAuthenticated
-              ? (<Button color="inherit" onClick={fetchToken}> LogIn &nbsp; <AccountCircle /></Button>)
+              ? (location.pathname !== '/' ? null : (<Button color="inherit" onClick={fetchToken}> LogIn &nbsp; <AccountCircle /></Button>))
               : (
                 <Button
                   color="inherit"

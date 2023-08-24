@@ -35,6 +35,7 @@ module.exports = {
     'react/jsx-no-constructed-context-values': 'off',
     'react/state-in-constructor': 0,
     'import/prefer-default-export': 0,
+    'no-nested-ternary': 'off',
     'max-len': [2, 252],
     'object-curly-newline': 0,
     'react/jsx-filename-extension': 0,
