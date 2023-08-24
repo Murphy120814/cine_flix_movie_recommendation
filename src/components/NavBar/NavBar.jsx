@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { AppBar, IconButton, Toolbar, Drawer, Button, Avatar, useMediaQuery } from '@mui/material';
 import { Menu, AccountCircle, Brightness4, Brightness7 } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
@@ -6,6 +6,8 @@ import { useTheme } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser, userSelector } from '../../features/auth';
 import useStyles from './styles';
+
+import { ColorModeContext } from '../../utils/ToggleColorMode';
 
 import { SideBar, Search } from '../index';
 
@@ -20,6 +22,8 @@ function NavBar() {
   const token = localStorage.getItem('request_token');
   const dispatch = useDispatch();
   const sessionIdFromLocalStorage = localStorage.getItem('session_id');
+
+  const colorMode = useContext(ColorModeContext);
 
   // console.log(user);
   useEffect(() => {
@@ -57,7 +61,7 @@ function NavBar() {
           </IconButton>
           )}
 
-          <IconButton color="inherit" sx={{ ml: 1 }} onClick={() => { }}>
+          <IconButton color="inherit" sx={{ ml: 1 }} onClick={colorMode.toggleColorMode}>
             {theme.palette.mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
 
@@ -77,7 +81,7 @@ function NavBar() {
                   {!isMobile && <>My Movies &nbsp;</>}
                   <Avatar
                     sx={{ width: 30, height: 30 }}
-                    src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP._ARzR7F_fff_KI14yMKBzwHaHa%26pid%3DApi%26h%3D160&f=1&ipt=a9b0fca5521822725e434f0a9b427e93fc6af331bfc978bed78471a42e53e23e&ipo=images"
+                    src={`https://www.themoviedb.org/t/p/w64_and_h64_face${user?.avatar?.tmdb?.avatar_path}`}
                     alt="This is profile avatar"
                   />
                 </Button>

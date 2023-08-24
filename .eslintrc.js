@@ -32,6 +32,7 @@ module.exports = {
     'consistent-return': 'off',
     'react/prop-types': 0,
     'linebreak-style': 0,
+    'react/jsx-no-constructed-context-values': 'off',
     'react/state-in-constructor': 0,
     'import/prefer-default-export': 0,
     'max-len': [2, 252],
