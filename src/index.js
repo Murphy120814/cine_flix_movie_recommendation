@@ -9,6 +9,12 @@ import store from './app/store';
 import App from './components/App';
 import './index.css';
 
+if (process.env.NODE_ENV === 'production') {
+  console.log = () => {};
+  console.error = () => {};
+  console.debug = () => {};
+}
+
 ReactDOM.render(
   <Provider store={store}>
     <ToggleColorModeProvider>
